@@ -1,0 +1,8 @@
+name: Publish Document
+title:
+account: rpubs
+server: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/287486/4bb0a6bcdc86434cb4e29527d446426c
+bundleId: https://api.rpubs.com/api/v1/document/287486/4bb0a6bcdc86434cb4e29527d446426c
+url: http://rpubs.com/tjaensch/287486
+when: 1498485822.00016

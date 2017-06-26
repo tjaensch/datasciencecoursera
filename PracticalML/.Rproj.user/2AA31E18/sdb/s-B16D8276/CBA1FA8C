@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"PracticalML\"\noutput: html_document\n---\n\n```{r setup, include=FALSE}\nknitr::opts_chunk$set(echo = TRUE)\n```\n\n## Load libraries\n\n```{r}\nlibrary(caret)\nlibrary(rpart)\nlibrary(rpart.plot)\nlibrary(randomForest)\nlibrary(corrplot)\n```\n\n## Executive Summary\n\nUsing devices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement – a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: http://groupware.les.inf.puc-rio.br/har (see the section on the Weight Lifting Exercise Dataset).\n\n## Load data\n\n```{r}\ntrainRaw <- read.csv('pml-training.csv')\ntestRaw <- read.csv('pml-testing.csv')\ndim(trainRaw)\ndim(testRaw)\n```\n\n## Preprocess data, remove NA and unnecessary variables but preserve \"classe\" variable\n\n```{r}\nsum(complete.cases(trainRaw))\ntrainRaw <- trainRaw[, colSums(is.na(trainRaw)) == 0] \ntestRaw <- testRaw[, colSums(is.na(testRaw)) == 0] \nclasse <- trainRaw$classe\ntrainRemove <- grepl(\"^X|timestamp|window\", names(trainRaw))\ntrainRaw <- trainRaw[, !trainRemove]\ntrainCleaned <- trainRaw[, sapply(trainRaw, is.numeric)]\ntrainCleaned$classe <- classe\ntestRemove <- grepl(\"^X|timestamp|window\", names(testRaw))\ntestRaw <- testRaw[, !testRemove]\ntestCleaned <- testRaw[, sapply(testRaw, is.numeric)]\n```\n\n## Split data in training and validation set\n\n```{r}\ninTrain <- createDataPartition(trainCleaned$classe, p=0.70, list=F)\ntrainData <- trainCleaned[inTrain, ]\ntestData <- trainCleaned[-inTrain, ]\n```\n\n## Fit model with Random Forest method\n\n```{r}\ncontrolRf <- trainControl(method=\"cv\", 5)\nmodelRf <- train(classe ~ ., data=trainData, method=\"rf\", trControl=controlRf, sampsize=1000, ntree=5)\nmodelRf\n```\n\n## Predict results for test data\n\n```{r}\nresult <- predict(modelRf, testCleaned[, -length(names(testCleaned))])\nresult\n```\n\n## Decision tree plot\n\n```{r}\ntreeModel <- rpart(classe ~ ., data=trainData, method=\"class\")\nprp(treeModel)\n```",
+    "created" : 1498483065180.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2467333739",
+    "id" : "CBA1FA8C",
+    "lastKnownWriteTime" : 1498485791,
+    "last_content_update" : 1498485791261,
+    "path" : "~/Desktop/PracticalML/PracticalML.Rmd",
+    "project_path" : "PracticalML.Rmd",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
