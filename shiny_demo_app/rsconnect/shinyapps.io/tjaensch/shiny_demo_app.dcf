@@ -1,0 +1,10 @@
+name: shiny_demo_app
+title: shiny_demo_app
+account: tjaensch
+server: shinyapps.io
+appId: 192958
+bundleId: 885386
+url: https://tjaensch.shinyapps.io/shiny_demo_app/
+when: 1498661712.61816
+asMultiple: FALSE
+asStatic: FALSE
