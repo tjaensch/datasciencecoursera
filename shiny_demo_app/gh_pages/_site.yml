@@ -1,1 +1,7 @@
+name: "shiny_demo_app"
 output_dir: "."
+navbar:
+  title: "Car Explorer"
+  left:
+    - text: "Car Explorer"
+      href: car_explorer_presentation.html
